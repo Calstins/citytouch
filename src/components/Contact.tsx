@@ -217,25 +217,29 @@ export default function Contact() {
                   {
                     icon: Phone,
                     title: 'Phone',
-                    value: '07XXX XXXXXX',
+                    value:
+                      '<a href="tel:+447786347537"> +44 7786 347537</a>, <a href="tel:+447455621130">+44 0745 5621130</a>',
                     desc: 'Available 7 days a week',
                   },
                   {
                     icon: Mail,
                     title: 'Email',
-                    value: 'youremail@example.com',
+                    value:
+                      '<a href="mailto:citytouchservices@gmail.com">citytouchservices@gmail.com</a>',
                     desc: 'Response within 2 hours',
                   },
                   {
                     icon: MessageCircle,
                     title: 'Social Media',
-                    value: '@freshfixservices',
+                    value:
+                      '<a href="https://www.instagram.com/citytouch_services" target="_blank" rel="noopener noreferrer">@Citytouch_services</a>',
                     desc: 'Follow us for updates',
                   },
                   {
                     icon: MapPin,
                     title: 'Service Area',
-                    value: 'London & Surrounding Areas',
+                    value:
+                      'Serving Leicester, London & Other Surrounding Areas',
                     desc: 'We come to you!',
                   },
                 ].map((contact, index) => (
@@ -255,7 +259,10 @@ export default function Contact() {
                       <h4 className="font-semibold mb-1 font-heading">
                         {contact.title}
                       </h4>
-                      <p className="text-gray-600 font-body">{contact.value}</p>
+                      <p
+                        className="text-gray-600 font-body"
+                        dangerouslySetInnerHTML={{ __html: contact.value }}
+                      />
                       <p className="text-sm text-gray-500 font-body">
                         {contact.desc}
                       </p>

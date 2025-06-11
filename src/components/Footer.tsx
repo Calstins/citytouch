@@ -1,13 +1,8 @@
 'use client';
 
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Instagram,
-  Facebook,
-  Twitter,
-} from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import { PiTiktokLogo } from 'react-icons/pi';
+import { FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
@@ -78,17 +73,46 @@ export default function Footer() {
               }
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              {[Facebook, Instagram, Twitter].map((Icon, index) => (
-                <motion.a
-                  key={index}
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Icon className="h-5 w-5" />
-                </motion.a>
-              ))}
+              <motion.a
+                href="https://www.instagram.com/citytouch_services"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Instagram className="h-5 w-5" />
+              </motion.a>
+              <motion.a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Facebook className="h-5 w-5" />
+              </motion.a>
+              <motion.a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <PiTiktokLogo className="h-5 w-5" />
+              </motion.a>
+              <motion.a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaXTwitter className="h-5 w-5" />
+              </motion.a>
             </motion.div>
           </motion.div>
 
@@ -172,10 +196,19 @@ export default function Footer() {
               animate={isInView ? 'visible' : 'hidden'}
             >
               {[
-                { icon: Phone, text: '07XXX XXXXXX' },
-                { icon: Mail, text: 'youremail@example.com' },
-                { icon: MapPin, text: 'London & Surrounding Areas' },
-                { icon: Instagram, text: '@freshfixservices' },
+                {
+                  icon: Phone,
+                  text: '<a href="tel:+447786347537"> +44 7786 347537</a>, <a href="tel:+447455621130">+44 0745 5621130</a>',
+                },
+                {
+                  icon: Mail,
+                  text: '<a href="mailto:citytouchservices@gmail.com">citytouchservices@gmail.com</a>',
+                },
+                { icon: MapPin, text: '2, Curzon Road, Leicester' },
+                {
+                  icon: Instagram,
+                  text: '<a href="https://www.instagram.com/citytouch_services" target="_blank" rel="noopener noreferrer">@Citytouch_services</a>',
+                },
               ].map((contact, index) => (
                 <motion.div
                   key={index}
@@ -189,9 +222,10 @@ export default function Footer() {
                   >
                     <contact.icon className="h-5 w-5 mr-3 text-blue-400" />
                   </motion.div>
-                  <span className="text-gray-300 font-body">
-                    {contact.text}
-                  </span>
+                  <span
+                    className="text-gray-300 font-body"
+                    dangerouslySetInnerHTML={{ __html: contact.text }}
+                  />
                 </motion.div>
               ))}
             </motion.div>

@@ -337,19 +337,26 @@ export default function ContactForm() {
         <p className="text-sm text-gray-600 text-center font-body">
           Need immediate assistance? Call us at{' '}
           <motion.a
-            href="tel:07XXXXXXXX"
-            className="text-blue-600 font-semibold hover:underline"
+            href="tel:+447786347537"
+            className="text-blue-600 font-semibold hover:underline mr-1"
             whileHover={{ scale: 1.05 }}
           >
-            07XXX XXXXXX
-          </motion.a>{' '}
+            +44 7786 347537,
+          </motion.a>
+          <motion.a
+            href="tel:+44745621130"
+            className="text-blue-600 font-semibold hover:underline  mr-1"
+            whileHover={{ scale: 1.05 }}
+          >
+            +44 0745 5621130
+          </motion.a>
           or email{' '}
           <motion.a
-            href="mailto:youremail@example.com"
+            href="mailto:citytouchservices@gmail"
             className="text-blue-600 font-semibold hover:underline"
             whileHover={{ scale: 1.05 }}
           >
-            youremail@example.com
+            citytouchservices@gmail.com
           </motion.a>
         </p>
       </motion.div>

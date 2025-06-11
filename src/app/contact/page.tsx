@@ -153,16 +153,23 @@ export default function Contact() {
                   animate={contactInView ? 'visible' : 'hidden'}
                 >
                   {[
-                    { icon: Phone, title: 'Phone', value: '07XXX XXXXXX' },
+                    {
+                      icon: Phone,
+                      title: 'Phone',
+                      value:
+                        '<a href="tel:+447786347537"> +44 7786 347537</a>, <a href="tel:+447455621130">+44 0745 5621130</a>',
+                    },
                     {
                       icon: Mail,
                       title: 'Email',
-                      value: 'youremail@example.com',
+                      value:
+                        '<a href="mailto:citytouchservices@gmail.com">citytouchservices@gmail.com</a>',
                     },
                     {
                       icon: MapPin,
                       title: 'Service Area',
-                      value: 'London & Surrounding Areas',
+                      value:
+                        'Serving Leicester, London & Other Surrounding Areas',
                     },
                     {
                       icon: Clock,
@@ -172,7 +179,8 @@ export default function Contact() {
                     {
                       icon: MessageCircle,
                       title: 'Social Media',
-                      value: '@freshfixservices',
+                      value:
+                        ' <a href="https://www.instagram.com/citytouch_services" target="_blank" rel="noopener noreferrer">@Citytouch_services</a>',
                     },
                   ].map((contact, index) => (
                     <motion.div
@@ -191,9 +199,10 @@ export default function Contact() {
                         <h3 className="font-semibold font-heading">
                           {contact.title}
                         </h3>
-                        <p className="text-gray-600 font-body">
-                          {contact.value}
-                        </p>
+                        <p
+                          className="text-gray-600 font-body"
+                          dangerouslySetInnerHTML={{ __html: contact.value }}
+                        />
                       </div>
                     </motion.div>
                   ))}

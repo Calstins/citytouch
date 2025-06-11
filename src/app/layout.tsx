@@ -10,6 +10,12 @@ export const metadata: Metadata = {
     'City Touch Services - Professional Cleaning, Errands & Mobile Barbing',
   description:
     'Professional cleaning services, reliable errands, and mobile barbing in London and surrounding areas. Sharp looks, clean spaces, reliable errands.',
+  icons: {
+    icon: [
+      '/favicon.svg',
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({
