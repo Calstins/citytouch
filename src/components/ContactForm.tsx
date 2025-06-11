@@ -42,6 +42,7 @@ export default function ContactForm() {
         message: '',
       });
     } catch (error) {
+      console.log('Submission error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -110,8 +111,8 @@ export default function ContactForm() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
-        Fill out the form below and we'll get back to you within 2 hours with a
-        personalized quote.
+        Fill out the form below and we&apos;ll get back to you within 2 hours
+        with a personalized quote.
       </motion.p>
 
       <motion.form
@@ -305,8 +306,8 @@ export default function ContactForm() {
               transition={{ type: 'spring', stiffness: 200 }}
             >
               <p className="text-green-800 text-center font-body">
-                ✅ Message sent successfully! We'll get back to you within 2
-                hours.
+                ✅ Message sent successfully! We&apos;ll get back to you within
+                2 hours.
               </p>
             </motion.div>
           )}

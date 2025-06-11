@@ -1,7 +1,7 @@
 'use client';
 
 import ContactForm from './ContactForm';
-import { MapPin, Clock, Award, Phone, Mail, MessageCircle } from 'lucide-react';
+import { MapPin, Award, Phone, Mail, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
@@ -397,7 +397,7 @@ export default function Contact() {
                       </div>
                     </div>
                     <p className="text-gray-600 italic font-body leading-relaxed">
-                      "{testimonials[currentTestimonial].text}"
+                      &apos;{testimonials[currentTestimonial].text}&apos;
                     </p>
                   </motion.div>
                 </AnimatePresence>

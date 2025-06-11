@@ -185,8 +185,8 @@ export default function CookiesPage() {
                 Cookie Consent
               </h3>
               <p className="font-body mb-4">
-                When you first visit our website, we'll ask for your consent to
-                use non-essential cookies. You can:
+                When you first visit our website, we&apos;ll ask for your
+                consent to use non-essential cookies. You can:
               </p>
               <ul className="list-disc pl-6 mb-6 font-body">
                 <li>Accept all cookies</li>

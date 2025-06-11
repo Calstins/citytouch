@@ -1,4 +1,4 @@
-import { FileText, Scale, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Scale, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function TermsPage() {
   return (

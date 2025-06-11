@@ -34,10 +34,11 @@ export default function PrivacyPage() {
                 Introduction
               </h2>
               <p className="font-body">
-                City Touch Services ("we," "our," or "us") is committed to
-                protecting your privacy. This Privacy Policy explains how we
-                collect, use, disclose, and safeguard your information when you
-                visit our website or use our services.
+                City Touch Services (&apos;we,&apos; &apos;our,&apos; or
+                &apos;us&apos;) is committed to protecting your privacy. This
+                Privacy Policy explains how we collect, use, disclose, and
+                safeguard your information when you visit our website or use our
+                services.
               </p>
             </div>
 

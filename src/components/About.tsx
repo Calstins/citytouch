@@ -106,9 +106,9 @@ export default function About() {
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               With years of experience serving London and surrounding areas,
-              we've built our reputation on quality, reliability, and customer
-              satisfaction. Every service we provide is backed by our commitment
-              to excellence and attention to detail.
+              we&apos;ve built our reputation on quality, reliability, and
+              customer satisfaction. Every service we provide is backed by our
+              commitment to excellence and attention to detail.
             </motion.p>
 
             {/* Stats */}

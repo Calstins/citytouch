@@ -171,8 +171,9 @@ export default function About() {
                 >
                   City Touch Services was founded with a simple mission: to
                   provide exceptional, reliable services that make our
-                  customers' lives easier. We understand that in today's
-                  fast-paced world, time is precious, and quality matters.
+                  customers&apos; lives easier. We understand that in
+                  today&apos;s fast-paced world, time is precious, and quality
+                  matters.
                 </motion.p>
                 <motion.p
                   className="text-gray-600 mb-6 font-body"
@@ -182,10 +183,10 @@ export default function About() {
                   }
                   transition={{ delay: 0.6, duration: 0.6 }}
                 >
-                  From our humble beginnings, we've grown to become a trusted
-                  name in London and surrounding areas, offering comprehensive
-                  cleaning services, dependable errand running, and professional
-                  mobile barbing.
+                  From our humble beginnings, we&apos;ve grown to become a
+                  trusted name in London and surrounding areas, offering
+                  comprehensive cleaning services, dependable errand running,
+                  and professional mobile barbing.
                 </motion.p>
                 <motion.p
                   className="text-gray-600 font-body"
