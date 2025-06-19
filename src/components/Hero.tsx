@@ -27,11 +27,11 @@ export default function Hero() {
     },
     {
       title:
-        'Mobile <span class="font-script text-yellow-300">Barbing</span> Services',
-      subtitle: 'Sharp Looks at Your Doorstep',
+        'Mobile <span class="font-script text-yellow-300">Hair Care</span> Services',
+      subtitle: 'Professional Hair Care at Your Doorstep',
       description:
-        'Professional barbing services delivered to your location. Enjoy premium haircuts, beard trims, and grooming without leaving your home.',
-      icon: <Scissors className="h-16 w-16 text-white" />,
+        'Expert hair care services delivered to your location. Enjoy professional cuts, styling, braiding, and treatments for men and women without leaving your home.',
+      icon: '<Scissors className="h-16 w-16 text-white" />',
       bg: 'from-purple-600/50 to-purple-800/60',
       image:
         'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',

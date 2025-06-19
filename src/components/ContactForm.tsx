@@ -338,18 +338,18 @@ export default function ContactForm() {
         <p className="text-sm text-gray-600 text-center font-body">
           Need immediate assistance? Call us at{' '}
           <motion.a
-            href="tel:+447786347537"
-            className="text-blue-600 font-semibold hover:underline mr-1"
-            whileHover={{ scale: 1.05 }}
-          >
-            +44 7786 347537,
-          </motion.a>
-          <motion.a
             href="tel:+44745621130"
             className="text-blue-600 font-semibold hover:underline  mr-1"
             whileHover={{ scale: 1.05 }}
           >
-            +44 0745 5621130
+            +44 0745 5621130,
+          </motion.a>
+          <motion.a
+            href="tel:+447786347537"
+            className="text-blue-600 font-semibold hover:underline mr-1"
+            whileHover={{ scale: 1.05 }}
+          >
+            +44 7786 347537
           </motion.a>
           or email{' '}
           <motion.a

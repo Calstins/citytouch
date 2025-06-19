@@ -57,10 +57,10 @@ export default function Header() {
               <div className="flex items-center space-x-4 text-white font-body">
                 <div className="flex items-center">
                   <Phone className="h-4 w-4 text-blue-400 mr-2" />
-                  <Link href="tel:+447786347537" className="mr-2">
-                    +44 7786 347537{' '}
+                  <Link href="tel:`+4478455621130" className="mr-2">
+                    +44 0745 5621130
                   </Link>
-                  <Link href="tel:`+4478455621130">+44 0745 5621130</Link>
+                  <Link href="tel:+447786347537">+44 7786 347537</Link>
                 </div>
                 <div className="flex items-center">
                   <Mail className="h-4 w-4 text-blue-400 mr-2" />

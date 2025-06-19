@@ -36,17 +36,19 @@ export default function Services() {
     },
     {
       icon: <Scissors className="h-12 w-12 text-purple-600" />,
-      title: 'Mobile Barbing',
+      title: 'Mobile Hair Care Services',
       description:
-        'Professional barbing services at your doorstep. Enjoy premium haircuts, beard trims, and grooming in the comfort of your home.',
+        'Professional unisex hair treatments and styling at your location',
       features: [
-        'Haircuts & Styling',
-        'Beard Trimming',
-        'Hot Towel Shaves',
-        'Grooming Consultation',
+        "Men's haircuts & beard grooming",
+        "Women's cuts & styling",
+        'Hair braiding & protective styles',
+        'Hair treatments & conditioning',
+        'Special occasion styling',
+        'Bridal & event hair services',
       ],
       image:
-        'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', // Woman braiding hair
       gradient: 'from-purple-500 to-purple-700',
     },
     {

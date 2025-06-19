@@ -198,7 +198,7 @@ export default function Footer() {
               {[
                 {
                   icon: Phone,
-                  text: '<a href="tel:+447786347537"> +44 7786 347537</a>, <a href="tel:+447455621130">+44 0745 5621130</a>',
+                  text: '<a href="tel:+447455621130">+44 0745 5621130</a>, <a href="tel:+447786347537"> +44 7786 347537</a>,',
                 },
                 {
                   icon: Mail,
