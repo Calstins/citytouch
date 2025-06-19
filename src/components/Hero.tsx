@@ -1,13 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  Scissors,
-  Car,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, Car } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Hero() {

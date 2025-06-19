@@ -910,8 +910,8 @@ export default function Services() {
                 viewport={{ once: true }}
               >
                 Book your service today and discover why City Touch Services is
-                London's trusted choice for professional cleaning, expert hair
-                care, and reliable errands.
+                London&apos;s trusted choice for professional cleaning, expert
+                hair care, and reliable errands.
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center"

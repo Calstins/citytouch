@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import StairEffect from '@/components/StairEffect';
 import './globals.css';
+import WhatsAppChat from '@/components/WhatsAppChat';
 
 export const metadata: Metadata = {
   title:
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <WhatsAppChat />
         </PageTransition>
       </body>
     </html>
