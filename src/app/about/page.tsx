@@ -133,7 +133,7 @@ export default function About() {
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
                 Your trusted partner for professional cleaning, reliable
-                errands, and mobile barbing services
+                errands, and mobile Hair Care
               </motion.p>
             </motion.div>
           </div>

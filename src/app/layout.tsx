@@ -7,10 +7,22 @@ import './globals.css';
 import WhatsAppChat from '@/components/WhatsAppChat';
 
 export const metadata: Metadata = {
-  title:
-    'City Touch Services - Professional Cleaning, Errands & Mobile Barbing',
+  title: 'City Touch Services - Professional Cleaning, Hair Care & Errands',
   description:
-    'Professional cleaning services, reliable errands, and mobile barbing in London and surrounding areas. Sharp looks, clean spaces, reliable errands.',
+    'Professional cleaning services, expert unisex hair care, and reliable errands in London. Mobile hair styling, braiding, cuts for men & women around Liechester, London and its suburbs. Contact us for a free quote!',
+  keywords: [
+    'mobile hair stylist London',
+    'hair braiding services',
+    'mens grooming London',
+    'womens hair styling',
+    'unisex hair salon',
+    'mobile hairdresser',
+    'professional cleaning London',
+    'errand services',
+    'hair treatments',
+    'protective hairstyles',
+    'special occasion hair',
+  ],
   icons: {
     icon: [
       '/favicon.svg',

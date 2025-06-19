@@ -1,8 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Send, Loader2 } from 'lucide-react';
+import { Send, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+
+// Extend the Window interface to include gtag
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,21 +25,88 @@ export default function ContactForm() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Initialize EmailJS (you can also do this in a useEffect)
+  const initEmailJS = () => {
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
 
     try {
-      // EmailJS integration would go here
-      // Example:
-      // import emailjs from 'emailjs-com'
-      // await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData, 'YOUR_USER_ID')
+      // Initialize EmailJS
+      initEmailJS();
 
-      // For now, we'll simulate the submission
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Get environment variables
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const autoReplyTemplateId =
+        process.env.NEXT_PUBLIC_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
 
-      console.log('Form submitted:', formData);
+      if (!serviceId || !templateId) {
+        throw new Error(
+          'EmailJS configuration is missing. Please check your environment variables.'
+        );
+      }
+
+      // Prepare template parameters
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || 'Not provided',
+        contactMethod: getContactMethodLabel(formData.contactMethod),
+        service: getServiceLabel(formData.service) || 'Not specified',
+        message: formData.message,
+        submission_time: new Date().toLocaleString('en-GB', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZone: 'Europe/London',
+        }),
+        to_email: 'citytouchservices@gmail.com', // Your business email
+        reply_to: formData.email,
+      };
+
+      // Send main notification email to business
+      const result = await emailjs.send(serviceId, templateId, templateParams);
+
+      console.log('Main email sent successfully:', result.text);
+
+      // Send auto-reply to customer (if template is configured)
+      if (autoReplyTemplateId) {
+        try {
+          const autoReplyParams = {
+            ...templateParams,
+            to_email: formData.email, // Send to customer
+          };
+
+          const autoReplyResult = await emailjs.send(
+            serviceId,
+            autoReplyTemplateId,
+            autoReplyParams
+          );
+
+          console.log('Auto-reply sent successfully:', autoReplyResult.text);
+        } catch (autoReplyError) {
+          console.log(
+            'Auto-reply failed (but main email succeeded):',
+            autoReplyError
+          );
+          // Don't throw error here as main email was successful
+        }
+      }
+
+      // Success
       setSubmitStatus('success');
       setFormData({
         name: '',
@@ -41,12 +116,35 @@ export default function ContactForm() {
         service: '',
         message: '',
       });
-    } catch (error) {
-      console.log('Submission error:', error);
+
+      // Track successful submission (optional)
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'form_submit', {
+          event_category: 'Contact',
+          event_label: 'Contact Form',
+          value: 1,
+        });
+      }
+    } catch (error: any) {
+      console.error('EmailJS error:', error);
       setSubmitStatus('error');
+
+      // Set user-friendly error message
+      if (error.text) {
+        setErrorMessage(`Failed to send message: ${error.text}`);
+      } else if (error.message) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage(
+          'Unable to send message. Please try calling us directly or check your internet connection.'
+        );
+      }
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setTimeout(() => {
+        setSubmitStatus('idle');
+        setErrorMessage('');
+      }, 8000);
     }
   };
 
@@ -60,6 +158,37 @@ export default function ContactForm() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  // Helper functions for labels
+  const getContactMethodLabel = (method: string) => {
+    const methods: { [key: string]: string } = {
+      email: 'Email',
+      phone: 'Phone Call',
+      text: 'Text Message',
+      whatsapp: 'WhatsApp',
+    };
+    return methods[method] || method;
+  };
+
+  const getServiceLabel = (service: string) => {
+    const services: { [key: string]: string } = {
+      'house-cleaning': 'House Cleaning',
+      'office-cleaning': 'Office Cleaning',
+      'carpet-cleaning': 'Carpet Cleaning',
+      'window-washing': 'Window Washing',
+      'mens-grooming': "Men's Grooming",
+      'womens-hair-styling': "Women's Hair Treatments",
+      'special-occasion-hair': 'Special Occasion Hair',
+      'hair-braiding': 'Hair Braiding',
+      'hair-treatments': 'Hair Treatments',
+      'errand-services': 'Errand Services',
+      janitorial: 'Janitorial Services',
+      sanitization: 'Sanitization',
+      multiple: 'Multiple Services',
+      other: 'Other',
+    };
+    return services[service] || service;
   };
 
   const inputVariants = {
@@ -112,7 +241,7 @@ export default function ContactForm() {
         transition={{ delay: 0.4, duration: 0.6 }}
       >
         Fill out the form below and we&apos;ll get back to you within 2 hours
-        with a personalized quote.
+        with a personalized quote from <strong>Citytouchservices</strong>.
       </motion.p>
 
       <motion.form
@@ -137,7 +266,8 @@ export default function ContactForm() {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Enter your full name"
             whileFocus={{ scale: 1.02 }}
           />
@@ -158,7 +288,8 @@ export default function ContactForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Enter your email address"
             whileFocus={{ scale: 1.02 }}
           />
@@ -178,7 +309,8 @@ export default function ContactForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Enter your phone number"
             whileFocus={{ scale: 1.02 }}
           />
@@ -198,7 +330,8 @@ export default function ContactForm() {
             required
             value={formData.contactMethod}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             whileFocus={{ scale: 1.02 }}
           >
             <option value="email">Email</option>
@@ -221,7 +354,8 @@ export default function ContactForm() {
             name="service"
             value={formData.service}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             whileFocus={{ scale: 1.02 }}
           >
             <option value="">Select a service</option>
@@ -229,7 +363,13 @@ export default function ContactForm() {
             <option value="office-cleaning">Office Cleaning</option>
             <option value="carpet-cleaning">Carpet Cleaning</option>
             <option value="window-washing">Window Washing</option>
-            <option value="mobile-barbing">Mobile Barbing</option>
+            <option value="mens-grooming">Men&apos;s Grooming</option>
+            <option value="womens-hair-styling">
+              Women&apos;s Hair Treatments
+            </option>
+            <option value="special-occasion-hair">Special Occasion Hair</option>
+            <option value="hair-braiding">Hair Braiding</option>
+            <option value="hair-treatments">Hair Treatments</option>
             <option value="errand-services">Errand Services</option>
             <option value="janitorial">Janitorial Services</option>
             <option value="sanitization">Sanitization</option>
@@ -253,7 +393,8 @@ export default function ContactForm() {
             rows={5}
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical transition-all duration-300 font-body"
+            disabled={isSubmitting}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical transition-all duration-300 font-body disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Tell us about your needs, preferred schedule, and any specific requirements..."
             whileFocus={{ scale: 1.02 }}
           />
@@ -265,8 +406,8 @@ export default function ContactForm() {
           disabled={isSubmitting}
           className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed font-body"
           variants={inputVariants}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={!isSubmitting ? { scale: 1.05 } : {}}
+          whileTap={!isSubmitting ? { scale: 0.95 } : {}}
         >
           <AnimatePresence mode="wait">
             {isSubmitting ? (
@@ -278,7 +419,7 @@ export default function ContactForm() {
                 className="flex items-center"
               >
                 <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Sending...
+                Sending Message...
               </motion.div>
             ) : (
               <motion.div
@@ -305,10 +446,16 @@ export default function ContactForm() {
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 200 }}
             >
-              <p className="text-green-800 text-center font-body">
-                ✅ Message sent successfully! We&apos;ll get back to you within
-                2 hours.
-              </p>
+              <div className="flex items-center text-green-800 font-body">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                <div>
+                  <p className="font-semibold">Message sent successfully!</p>
+                  <p className="text-sm">
+                    We&apos;ll get back to you within 2 hours. Check your email
+                    for a confirmation.
+                  </p>
+                </div>
+              </div>
             </motion.div>
           )}
 
@@ -320,9 +467,15 @@ export default function ContactForm() {
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 200 }}
             >
-              <p className="text-red-800 text-center font-body">
-                ❌ Something went wrong. Please try again or call us directly.
-              </p>
+              <div className="flex items-start text-red-800 font-body">
+                <XCircle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Message could not be sent</p>
+                  <p className="text-sm mt-1">
+                    {errorMessage || 'Please try again or call us directly.'}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -338,12 +491,13 @@ export default function ContactForm() {
         <p className="text-sm text-gray-600 text-center font-body">
           Need immediate assistance? Call us at{' '}
           <motion.a
-            href="tel:+44745621130"
-            className="text-blue-600 font-semibold hover:underline  mr-1"
+            href="tel:+447455621130"
+            className="text-blue-600 font-semibold hover:underline mr-1"
             whileHover={{ scale: 1.05 }}
           >
-            +44 0745 5621130,
+            +44 0745 5621130
           </motion.a>
+          or{' '}
           <motion.a
             href="tel:+447786347537"
             className="text-blue-600 font-semibold hover:underline mr-1"
@@ -351,9 +505,10 @@ export default function ContactForm() {
           >
             +44 7786 347537
           </motion.a>
-          or email{' '}
+          <br />
+          Email us at{' '}
           <motion.a
-            href="mailto:citytouchservices@gmail"
+            href="mailto:citytouchservices@gmail.com"
             className="text-blue-600 font-semibold hover:underline"
             whileHover={{ scale: 1.05 }}
           >
